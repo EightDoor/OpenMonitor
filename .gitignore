@@ -1,0 +1,94 @@
+# Byte编译文件
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 环境变量文件
+.env
+.env.*
+
+# 虚拟环境
+venv/
+ENV/
+env/
+.virtualenv/
+
+# 安装包
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 测试结果
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# Profiling数据
+*.prof
+
+# IPython/Jupyter Notebook
+.ipynb_checkpoints
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# celery beat schedule
+celerybeat-schedule
+
+# SageMath notebooks
+*.sage.py
+
+# Sphinx文档
+docs/_build/
+
+# pytest
+.cache/
+
+# pycharm
+.idea/
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# 本地日志文件
+*.log
+
+# 临时文件
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
+*.save
+*.~undo-tree~
+
+# 如果有需要包含的自定义规则，请在此处添加
