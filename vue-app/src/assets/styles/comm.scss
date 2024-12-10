@@ -1,0 +1,33 @@
+@mixin flexRowStart($direction: row, $justify-content: flex-start, $align-items: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+
+@mixin flex($direction: row, $justify-content: center, $align-items: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+
+@mixin flexRowBetween($direction: row, $justify-content: space-between, $align-items: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+
+@mixin flexRowAround($direction: row, $justify-content: space-around, $align-items: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+
+@mixin column-gap($gap) {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: $gap;
+}
