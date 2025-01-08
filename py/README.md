@@ -6,3 +6,17 @@
 - pipreqs 根据项目文件中的实际导入来生成依赖列表
 - pip安装依赖 `pip install pipreqs`
 - 执行 `pipreqs ./ --encoding=utf-8`
+
+# 系统依赖
+- cpu温度获取：`lm-sensors`
+- 磁盘检查：`smartmontools`
+  - smartctl -H /dev/sda
+  ```text
+  # smart_status状态
+  状态	含义	描述
+  PASSED	健康良好	磁盘正常工作，未发现任何故障迹象。
+  FAILED	健康状况不良	磁盘检测到严重问题，可能即将失败。
+  PRE-FAIL	潜在故障，预警	检测到可能导致故障的潜在问题，建议备份。
+  UNKNOWN	无法获取健康状态	无法获取SMART数据，可能是硬件或接口问题。
+  N/A	不适用或无法获取状态	磁盘不支持 SMART 或状态无法访问。
+  ```
