@@ -5,6 +5,7 @@
 import pingparsing
 import psutil
 
+
 # ping 命令来测量网络的 丢包率 (packet_loss_rate) 和 平均延迟 (latency)
 def get_network_quality_with_pingparsing(host="8.8.8.8", count=4):
     ping_parser = pingparsing.PingParsing()
@@ -23,6 +24,7 @@ def get_network_quality_with_pingparsing(host="8.8.8.8", count=4):
     except Exception as e:
         return {"error": str(e)}
 
+
 # 网络信息
 def get_network_info():
     net_io = psutil.net_io_counters()
@@ -32,5 +34,5 @@ def get_network_info():
             "bytes_sent": net_io.bytes_sent,
             "bytes_recv": net_io.bytes_recv,
         },
-        "connections": len(psutil.net_connections())
+        "connections": len(psutil.net_connections()),
     }

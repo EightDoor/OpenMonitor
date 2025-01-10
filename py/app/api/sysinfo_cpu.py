@@ -17,13 +17,14 @@ def get_cpu_temperature():
             return {"average_temperature": avg_temp, "details": core_temps}
         else:
             return {"error": "No coretemp sensor data available"}
-    except Exception as e:
+    except Exception:
         # 如果 psutil 不可用，尝试调用 sensors 工具
         try:
             result = subprocess.run(["sensors"], capture_output=True, text=True)
             return {"output": result.stdout}
         except FileNotFoundError:
             return {"error": "sensors command not found, install lm-sensors"}
+
 
 # CPU信息
 def get_cpu_info():
@@ -33,5 +34,5 @@ def get_cpu_info():
         "usage": cpu_usage,
         "load": load_avg,
         # CPU温度需要硬件支持，可以使用第三方工具如 `sensors`
-        "temperature": get_cpu_temperature()
+        "temperature": get_cpu_temperature(),
     }

@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 # -*- coding:utf-8 -*-
+import smtplib
+from email.header import Header
+from email.mime.text import MIMEText
 
 # 邮件配置
 EMAIL_HOST = "smtp.your-email-provider.com"
@@ -7,6 +10,7 @@ EMAIL_PORT = 587
 EMAIL_USER = "your_email@example.com"
 EMAIL_PASSWORD = "your_password"
 EMAIL_RECEIVER = "receiver_email@example.com"
+
 
 # 检查并发送邮件
 def check_and_send_alert(info):

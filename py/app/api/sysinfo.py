@@ -1,14 +1,7 @@
 #!/usr/bin/python3
 # -*- coding:utf-8 -*-
 
-import os
-import smtplib
-import subprocess
-from email.header import Header
-from email.mime.text import MIMEText
 
-import pingparsing
-import psutil
 
 from app.api.sysinfo_cpu import get_cpu_info
 from app.api.sysinfo_dist import get_disk_info

@@ -6,7 +6,7 @@ import psutil
 
 
 # 磁盘信息
-def get_disk_info(disk = "/"):
+def get_disk_info(disk="/"):
     disk_usage = psutil.disk_usage(disk)
     disk_io = psutil.disk_io_counters()
     # 磁盘温度和SMART状态可以通过工具如 smartmontools 获取，需调用外部命令
@@ -16,6 +16,7 @@ def get_disk_info(disk = "/"):
         "write_bytes": disk_io.write_bytes,
         "temperature": get_disk_temperature,
     }
+
 
 # 获取磁盘温度
 def get_disk_temperature(disk="/dev/sda"):
@@ -75,9 +76,7 @@ def get_physical_disks():
             if "(internal, physical)" in line:  # 仅过滤物理磁盘
                 # 提取设备名称（例如 /dev/disk0, /dev/disk1 等）
                 device = line.split()[0]
-                physical_disks.append({
-                    "device": device
-                })
+                physical_disks.append({"device": device})
 
         return physical_disks
 
