@@ -1,70 +1,45 @@
 <template>
-  <v-chart class="chart" :option="option" />
+  <el-card  shadow="always">
+    <el-row>
+      <el-col :md="4" :xs="8">
+        <div class="status-item">
+          <SysInfoCPU :cpuInfo="cpuInfo"/>
+        </div>
+      </el-col>
+    </el-row>
+  </el-card>
 </template>
 
-<script setup>
-import { use } from "echarts/core";
-import { CanvasRenderer } from "echarts/renderers";
-import { PieChart } from "echarts/charts";
-import {
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent
-} from "echarts/components";
-import VChart from "vue-echarts";
-import { ref, provide } from "vue";
-import HomeLayout from "@/views/home/components/HomeLayout.vue";
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+import SysInfoCPU from "@/views/home/components/SysInfo/SysInfoCPU.vue";
+import MonitorApi from "@/api/MonitorApi";
+import logger from "@/utils/logger";
+import {ICpu} from "@/interface/ISysInfo.ts";
 
-use([
-  CanvasRenderer,
-  PieChart,
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent
-]);
+const cpuInfo = ref<ICpu>()
 
+function getSysInfo() {
+  MonitorApi.sysCpuInfo().then(res=>{
+    const data = res.data;
+    cpuInfo.value = data;
+    logger.debug('cpu信息', data)
+    setTimeout(()=>{
+      getSysInfo()
+    }, 1000)
+  })
+}
 
-const option = ref({
-  title: {
-    text: "Traffic Sources",
-    left: "center"
-  },
-  tooltip: {
-    trigger: "item",
-    formatter: "{a} <br/>{b} : {c} ({d}%)"
-  },
-  legend: {
-    orient: "vertical",
-    left: "left",
-    data: ["Direct", "Email", "Ad Networks", "Video Ads", "Search Engines"]
-  },
-  series: [
-    {
-      name: "Traffic Sources",
-      type: "pie",
-      radius: "55%",
-      center: ["50%", "60%"],
-      data: [
-        { value: 335, name: "Direct" },
-        { value: 310, name: "Email" },
-        { value: 234, name: "Ad Networks" },
-        { value: 135, name: "Video Ads" },
-        { value: 1548, name: "Search Engines" }
-      ],
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: "rgba(0, 0, 0, 0.5)"
-        }
-      }
-    }
-  ]
-});
+onMounted(()=>{
+  getSysInfo()
+})
 </script>
 
-<style scoped>
-.chart {
-  height: 400px;
+<style scoped lang="scss">
+.status-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 </style>

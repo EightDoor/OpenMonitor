@@ -21,6 +21,15 @@ export default defineConfig({
             )],
         }),
     ],
+    server: {
+      proxy: {
+          '/api': {
+              target: 'http://localhost:8200',
+              changeOrigin: true,
+              rewrite: (path) => path.replace(/^\/api/, ''),
+          },
+      }
+    },
     resolve: {
         // extensions: [".js", ".jsx", ".ejs", '.mjs'], // 之前忽略了 .mjs
         alias: {
