@@ -1,7 +1,7 @@
 <template>
   <HomeLayout>
     <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-      <el-tab-pane label="系统信息" name="sysinfo">
+      <el-tab-pane label="基础" name="sysinfo">
         <SysInfoMonitor/>
       </el-tab-pane>
       <el-tab-pane label="设置" name="setting">
@@ -19,6 +19,7 @@ import Settings from "@/views/home/components/Settings.vue";
 import {TabsPaneContext} from "element-plus";
 
 const activeName = ref("sysinfo")
+
 function handleClick(tab: TabsPaneContext, event: Event) {
   console.log(tab, event)
 }

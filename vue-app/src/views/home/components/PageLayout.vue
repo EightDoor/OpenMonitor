@@ -6,18 +6,26 @@
     <div class="content">
       <slot/>
     </div>
+    <div class="bottom">
+      <slot name="footer"/>
+    </div>
   </div>
 </template>
-<script setup>
-  import { ref } from 'vue';
-</script>
+<script setup></script>
 <style scoped lang="scss">
 .page-layout {
   .title {
-    font-size: 25px;
+    text-align: center;
+    font-size: 20px;
   }
+
   .content {
     margin-top: 15px;
+  }
+
+  .bottom {
+    font-size: 15px;
+    text-align: center;
   }
 }
 </style>
