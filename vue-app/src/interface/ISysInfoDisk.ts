@@ -11,13 +11,10 @@ export interface ISysInfoDiskInfo {
 }
 
 export interface ISysInfoDiskIO {
-    read_bytes: number;
-    write_bytes: number;
     read_count: number;
     write_count: number;
-    read_time?: number;
-    write_time: ? number;
-    busy_time?: number;
-    read_merged_count?: number;
-    write_merged_count?: number;
+    read_latency: number;
+    write_latency: number;
+    read_bytes: number;
+    write_bytes: number;
 }

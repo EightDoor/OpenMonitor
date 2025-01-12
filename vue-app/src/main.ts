@@ -4,6 +4,9 @@ import "@/assets/styles/default.scss"
 import '@/assets/styles/comm.scss'
 import "normalize.css"
 
+// echarts
+import "echarts";
+
 import App from './App.vue'
 import router from './router'
 import store from './store'

@@ -19,14 +19,14 @@
     </el-row>
   </ZCard>
   <el-row :gutter="20" class="tw-mt-4">
-    <el-col :md="12" :xs="24">
+    <el-col :md="12" :xs="24" v-loading="!diskIO">
       <ZCard title="磁盘IO">
-        <SysInfoDiskIO :list="diskIO"/>
+        <SysInfoDiskIO :data="diskIO"/>
       </ZCard>
     </el-col>
     <el-col :md="12" :xs="24">
       <ZCard>
-        <SysInfoDiskIO :list="diskIO"/>
+        123
       </ZCard>
     </el-col>
   </el-row>
@@ -108,6 +108,7 @@ const diskIO = ref()
 function getDiskIO() {
   MonitorApi.sysDiskIO().then(res => {
     const data = res.data;
+    diskIO.value = data;
     logger.debug('磁盘IO信息', data)
   })
 }
