@@ -57,28 +57,5 @@ def get_disk_smart_status(disk="/dev/sda"):
 
 
 def get_physical_disks():
-    """
-    获取所有物理磁盘信息，仅返回物理磁盘（排除分区和合成磁盘）
-    :return: 物理磁盘的列表
-    """
-    try:
-        # 使用 diskutil list 命令获取磁盘信息
-        result = subprocess.run(
-            ["diskutil", "list"], capture_output=True, text=True, check=True
-        )
-
-        # 初始化一个空列表来存储物理磁盘信息
-        physical_disks = []
-
-        # 按行解析输出
-        lines = result.stdout.splitlines()
-        for line in lines:
-            if "(internal, physical)" in line:  # 仅过滤物理磁盘
-                # 提取设备名称（例如 /dev/disk0, /dev/disk1 等）
-                device = line.split()[0]
-                physical_disks.append({"device": device})
-
-        return physical_disks
-
-    except Exception as e:
-        return {"error": str(e)}
+    result = psutil.disk_partitions()
+    return result

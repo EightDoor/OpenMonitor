@@ -19,9 +19,9 @@ def get_cpu_info():
     return result.success(res)
 
 @router.get("/get_disk_info")
-def get_disk_info():
+def get_disk_info(path: str):
     """获取磁盘信息"""
-    res = sysinfo_dist.get_disk_info()
+    res = sysinfo_dist.get_disk_info(path)
     return result.success(res)
 
 @router.get("/get_memory_info")

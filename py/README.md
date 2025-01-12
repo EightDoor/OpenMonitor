@@ -10,6 +10,7 @@
 # 系统依赖
 - cpu温度获取：`lm-sensors`
 - 磁盘检查：`smartmontools`
+- 获取磁盘列表 `diskutil`
   - smartctl -H /dev/sda
   ```text
   # smart_status状态

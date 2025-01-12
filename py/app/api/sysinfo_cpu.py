@@ -28,11 +28,13 @@ def get_cpu_temperature():
 
 # CPU信息
 def get_cpu_info():
-    cpu_usage = psutil.cpu_percent(interval=1)
-    load_avg = os.getloadavg()
+    cpu_usage = psutil.cpu_percent()
+    cpu_count = psutil.cpu_count()
+    # load_avg = os.getloadavg()
     return {
         "usage": cpu_usage,
-        "load": load_avg,
+        "count": cpu_count,
+        # "load": load_avg,
         # CPU温度需要硬件支持，可以使用第三方工具如 `sensors`
-        "temperature": get_cpu_temperature(),
+        # "temperature": get_cpu_temperature(),
     }
