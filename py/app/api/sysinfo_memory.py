@@ -20,8 +20,8 @@ def get_memory_info():
                 "buffers": memory.buffers,
                 "cached": memory.cached,
                 "shared": memory.shared,
-                "slab": memory.slab
-            }
+                "slab": memory.slab,
+            },
         },
         "swap": {
             "usage": swap.percent,
@@ -29,6 +29,6 @@ def get_memory_info():
             "used": swap.used,
             "free": swap.free,
             "sin": swap.sin,
-            "sout": swap.sout
+            "sout": swap.sout,
         },
     }

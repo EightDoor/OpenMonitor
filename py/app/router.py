@@ -2,7 +2,14 @@
 # -*- coding:utf-8 -*-
 from fastapi import APIRouter
 from app import result
-from app.api import sysinfo_cpu, sysinfo_network,sysinfo_dist,sysinfo_log,sysinfo_memory,sysinfo_send_email
+from app.api import (
+    sysinfo_cpu,
+    sysinfo_network,
+    sysinfo_dist,
+    sysinfo_log,
+    sysinfo_memory,
+    sysinfo_send_email,
+)
 
 router = APIRouter()
 
@@ -18,10 +25,17 @@ def get_cpu_info():
     res = sysinfo_cpu.get_cpu_info()
     return result.success(res)
 
+
 @router.get("/get_disk_info")
 def get_disk_info(path: str):
     """获取磁盘信息"""
     res = sysinfo_dist.get_disk_info(path)
+    return result.success(res)
+
+@router.get("/get_disk_io")
+def get_disk_io():
+    """获取磁盘 IO"""
+    res = sysinfo_dist.get_disk_io()
     return result.success(res)
 
 @router.get("/get_memory_info")
@@ -30,11 +44,13 @@ def get_memory_info():
     res = sysinfo_memory.get_memory_info()
     return result.success(res)
 
+
 @router.get("/get_network_info")
 def get_network_info():
     """获取网络信息"""
     res = sysinfo_network.get_network_info()
     return result.success(res)
+
 
 @router.get("/sysinfo_log")
 def get_sysinfo_log():
