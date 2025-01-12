@@ -19,6 +19,7 @@
 import SysInfoUtil from "@/views/home/components/SysInfo/SysInfoUtil.ts";
 import PageLayout from "@/views/home/components/PageLayout.vue";
 import Utils from "@/utils";
+import {ISysInfoDiskInfo} from "@/interface/ISysInfoDisk.ts";
 
 const props = defineProps<{
   list: ISysInfoDiskInfo[]

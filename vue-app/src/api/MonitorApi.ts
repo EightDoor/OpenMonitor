@@ -40,6 +40,15 @@ const MonitorApi = {
                 path
             }
         })
+    },
+    /**
+     * 获取磁盘IO
+     */
+    sysDiskIO() {
+        return request({
+            url: "/get_disk_io",
+            method: "GET",
+        })
     }
 }
 

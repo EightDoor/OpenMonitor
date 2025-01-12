@@ -16,7 +16,7 @@
 .page-layout {
   .title {
     text-align: center;
-    font-size: 25px;
+    font-size: 20px;
   }
 
   .content {

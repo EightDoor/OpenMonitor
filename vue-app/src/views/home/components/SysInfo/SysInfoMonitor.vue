@@ -1,23 +1,35 @@
 <template>
-  <el-card shadow="always">
+  <ZCard title="系统信息">
     <el-row>
-      <el-col :md="4" :xs="8">
+      <el-col :md="4" :xs="12">
         <div class="status-item">
           <SysInfoCPU :cpuInfo="cpuInfo"/>
         </div>
       </el-col>
-      <el-col :md="4" :xs="8">
+      <el-col :md="4" :xs="12">
         <div class="status-item">
           <SysInfoMemoryUsageRate :data="memoryUsageRate"/>
         </div>
       </el-col>
-      <el-col :md="16" :xs="12">
+      <el-col :md="16" :xs="24">
         <div class="status-item-disk">
           <SysInfoDisk :list="diskInfoList"/>
         </div>
       </el-col>
     </el-row>
-  </el-card>
+  </ZCard>
+  <el-row :gutter="20" class="tw-mt-4">
+    <el-col :md="12" :xs="24">
+      <ZCard title="磁盘IO">
+        <SysInfoDiskIO :list="diskIO"/>
+      </ZCard>
+    </el-col>
+    <el-col :md="12" :xs="24">
+      <ZCard>
+        <SysInfoDiskIO :list="diskIO"/>
+      </ZCard>
+    </el-col>
+  </el-row>
 </template>
 
 <script setup lang="ts">
@@ -28,6 +40,9 @@ import logger from "@/utils/logger";
 import {ICpu, ISysInfoMemory} from "@/interface/ISysInfo.ts";
 import SysInfoMemoryUsageRate from "@/views/home/components/SysInfo/SysInfoMemoryUsageRate.vue";
 import SysInfoDisk from "@/views/home/components/SysInfo/SysInfoDisk.vue";
+import SysInfoDiskIO from "@/views/home/components/SysInfo/SysInfoDiskIO.vue";
+import ZCard from "@/components/ZCard.vue";
+import {ISysInfoDiskInfo} from "@/interface/ISysInfoDisk.ts";
 
 // cpu
 const cpuInfo = ref<ICpu>()
@@ -36,39 +51,6 @@ const memoryUsageRate = ref<ISysInfoMemory>()
 const intervalValue = ref()
 // 3秒钟
 const intervalTime = 3000;
-
-// 磁盘
-const diskList = ref<string[]>([])
-const diskInfoList = ref<ISysInfoDiskInfo[]>([])
-// 60秒
-const intervalTimeDisk = 60000
-const interValueDisk = ref()
-
-function getSysInfo() {
-  MonitorApi.sysCpuInfo().then(res => {
-    const data = res.data;
-    cpuInfo.value = data;
-    logger.debug('cpu信息', data)
-  })
-
-  MonitorApi.sysMemoryInfo().then(res => {
-    const data = res.data
-    memoryUsageRate.value = data
-    logger.debug('内存信息', data)
-  })
-}
-
-function getSysDisk() {
-  diskInfoList.value = []
-  MonitorApi.sysDiskList().then(res => {
-    const data = res.data
-    diskList.value = data
-    data.forEach((item) => {
-      getSysDiskInfo(item)
-    })
-    logger.debug('磁盘列表', data)
-  })
-}
 
 function getSysDiskInfo(item) {
   const [device, path, fs_type, options] = item;
@@ -82,6 +64,51 @@ function getSysDiskInfo(item) {
       options
     });
     logger.debug(`磁盘信息: ${path}`, data)
+  })
+}
+
+function getSysInfo() {
+  MonitorApi.sysCpuInfo().then(res => {
+    const data = res.data;
+    cpuInfo.value = data;
+    logger.debug('cpu信息', data)
+  })
+
+  MonitorApi.sysMemoryInfo().then(res => {
+    const data = res.data
+    memoryUsageRate.value = data
+    logger.debug('内存信息', data)
+  })
+
+  getDiskIO()
+}
+
+// 磁盘
+const diskList = ref<string[]>([])
+const diskInfoList = ref<ISysInfoDiskInfo[]>([])
+// 60秒
+const intervalTimeDisk = 60000
+const interValueDisk = ref()
+
+function getSysDisk() {
+  diskInfoList.value = []
+  MonitorApi.sysDiskList().then(res => {
+    const data = res.data
+    diskList.value = data
+    data.forEach((item) => {
+      getSysDiskInfo(item)
+    })
+    logger.debug('磁盘列表', data)
+  })
+}
+
+// 磁盘IO
+const diskIO = ref()
+
+function getDiskIO() {
+  MonitorApi.sysDiskIO().then(res => {
+    const data = res.data;
+    logger.debug('磁盘IO信息', data)
   })
 }
 
@@ -121,5 +148,6 @@ onMounted(() => {
   justify-content: flex-start;
   align-items: center;
   margin-left: 40px;
+  flex-wrap: wrap;
 }
 </style>
