@@ -20,12 +20,39 @@ export interface IDisk {
 }
 export interface ITemperature2 {
 }
-export interface IMemory {
-    usage: number;
-    swap_usage: number;
+
+export interface ISysInfoMemory {
+    memory: IMemory;
+    swap: ISwap;
 }
+export interface ISwap {
+    usage: number;
+    total: number;
+    used: number;
+    free: number;
+    sin: number;
+    sout: number;
+}
+export interface IMemory {
+    total: number;
+    available: number;
+    usage: number;
+    other: IMemoryOther;
+}
+export interface IMemoryOther {
+    used: number;
+    free: number;
+    active: number;
+    inactive: number;
+    buffers: number;
+    cached: number;
+    shared: number;
+    slab: number;
+}
+
 export interface ICpu {
     usage: number;
+    count: number;
     load: number[];
     temperature: ITemperature;
 }
