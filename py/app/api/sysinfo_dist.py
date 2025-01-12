@@ -24,6 +24,13 @@ def get_disk_io():
     return {
         "read_bytes": disk_io.read_bytes,
         "write_bytes": disk_io.write_bytes,
+        "read_count": disk_io.read_count,
+        "write_count": disk_io.write_count,
+        "read_time": disk_io.read_time,
+        "write_time": disk_io.write_time,
+        "busy_time": disk_io.busy_time,
+        "read_merged_count": disk_io.read_merged_count,
+        "write_merged_count": disk_io.write_merged_count   
     }
 
 
