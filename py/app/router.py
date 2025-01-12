@@ -33,9 +33,9 @@ def get_disk_info(path: str):
     return result.success(res)
 
 @router.get("/get_disk_io")
-def get_disk_io():
+async def get_disk_io():
     """获取磁盘 IO"""
-    res = sysinfo_dist.get_disk_io()
+    res = await sysinfo_dist.get_disk_io()
     return result.success(res)
 
 @router.get("/get_memory_info")

@@ -3,6 +3,7 @@
 import subprocess
 
 import psutil
+import asyncio
 
 
 # 磁盘信息
@@ -19,18 +20,28 @@ def get_disk_info(path="/"):
 
 
 # 磁盘io信息
-def get_disk_io():
-    disk_io = psutil.disk_io_counters()
+async def get_disk_io():
+    prev_counters = psutil.disk_io_counters()
+    await asyncio.sleep(1)
+    curr_counters = psutil.disk_io_counters()
+     # 增量计算
+    read_count_diff = curr_counters.read_count - prev_counters.read_count
+    write_count_diff = curr_counters.write_count - prev_counters.write_count
+    read_time_diff = curr_counters.read_time - prev_counters.read_time
+    write_time_diff = curr_counters.write_time - prev_counters.write_time
+    read_bytes = curr_counters.read_bytes - prev_counters.read_bytes
+    write_bytes = curr_counters.write_bytes - prev_counters.write_bytes
+    
+    # 避免除零错误
+    read_latency = read_time_diff / read_count_diff if read_count_diff > 0 else 0
+    write_latency = write_time_diff / write_count_diff if write_count_diff > 0 else 0
     return {
-        "read_bytes": disk_io.read_bytes,
-        "write_bytes": disk_io.write_bytes,
-        "read_count": disk_io.read_count,
-        "write_count": disk_io.write_count,
-        "read_time": disk_io.read_time,
-        "write_time": disk_io.write_time,
-        "busy_time": disk_io.busy_time,
-        "read_merged_count": disk_io.read_merged_count,
-        "write_merged_count": disk_io.write_merged_count   
+        "read_count": read_count_diff,
+        "write_count": write_count_diff,
+        "read_latency": read_latency,
+        "write_latency": write_latency,
+        "read_bytes": read_bytes,
+        "write_bytes": write_bytes
     }
 
 
