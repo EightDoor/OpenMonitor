@@ -13,7 +13,7 @@ def secs2hours(secs):
 
 def get_temp():
     """获取传感器数据"""
-    result = {}
+    result = []
     temps = psutil.sensors_temperatures()
     fans = psutil.sensors_fans() if hasattr(psutil, "sensors_fans") else {}
     battery = psutil.sensors_battery()
@@ -24,20 +24,35 @@ def get_temp():
         # 温度
         if name in temps:
             for entry in temps[name]:
-                result[name]['temperatures']['current'] = f"{entry.current}℃"
-                result[name]['temperatures']['high'] = f"{entry.high}℃"
-                result[name]['temperatures']['critical'] = f"{entry.critical}℃"
+                result.append({
+                    "name": name,
+                    "temperatures": {
+                        "current": f"{entry.current}℃",
+                        "high":  f"{entry.high}℃",
+                        "critical": f"{entry.critical}℃"
+                    }
+                })
 
         # 风扇
         if name in fans:    
             for entry in fans[name]:
-                result[name]['fans']['current'] = f"{entry.current} RPM"
+                result.append({
+                    "name": name,
+                    "fans": {
+                        "current"f"{entry.current} RPM"
+                    }
+                })
     
-    result['battery']['charge'] = round(battery.percent, 2)
+    battery = {
+        "charge": 0,
+        "pluggedIn": "",
+        "status": ""
+    }
+    battery['charge'] = round(battery.percent, 2)
     if battery.power_plugged:
-        result['battery']['pluggedIn'] = "yes"
-        result['battery']['status'] = "充电中" if battery.percent < 100 else "已充满"
+        battery['pluggedIn'] = "yes"
+        battery['status'] = "充电中" if battery.percent < 100 else "已充满"
     else:
-        result['battery']['status'] = "离线"
-        result['battery']['pluggedIn'] = "no"
+        battery['status'] = "离线"
+        battery['pluggedIn'] = "no"
     return result
