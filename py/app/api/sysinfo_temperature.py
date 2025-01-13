@@ -61,6 +61,6 @@ def get_temp():
     names = ['nvme', 'amdgpu', 'acpitz', 'coretemp']
     result_front_list = []
     for value in result:
-        if value in names:
+        if value['name'] in names:
             result_front_list.append(value)
     return result_front_list
