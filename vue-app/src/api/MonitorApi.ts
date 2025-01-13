@@ -1,5 +1,8 @@
 import request from "@/utils/request.ts";
 import {ICpu, IMemory} from "@/interface/ISysInfo.ts";
+import {ISysInfoDiskInfo} from "@/interface/ISysInfoDisk.ts";
+import {ISysInfoIOStatistics} from "@/interface/ISysInfoIOStatistics.ts";
+import {ISysInfoTemperatures} from "@/interface/ISysInfoTemperatures.ts";
 
 const MonitorApi = {
     /**
@@ -48,6 +51,24 @@ const MonitorApi = {
         return request({
             url: "/get_disk_io",
             method: "GET",
+        })
+    },
+    /**
+     * 获取网络统计信息
+     */
+    networkTrafficStatistics() {
+        return request<ISysInfoIOStatistics>({
+            url: "/network_traffic_statistics",
+            method: "GET",
+        })
+    },
+    /**
+     * 获取硬件温度
+     */
+    getTemp() {
+        return request<ISysInfoTemperatures[]>({
+            url: "/get_temp",
+            method: "GET"
         })
     }
 }

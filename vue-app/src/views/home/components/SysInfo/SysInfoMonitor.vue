@@ -19,14 +19,21 @@
     </el-row>
   </ZCard>
   <el-row :gutter="20" class="tw-mt-4">
+    <el-col :md="24" :xs="24">
+      <ZCard title="传感器数据">
+        <SysInfoTemperatures :data="hardwareTemperature"/>
+      </ZCard>
+    </el-col>
+  </el-row>
+  <el-row :gutter="20" class="tw-mt-4">
     <el-col :md="12" :xs="24" v-loading="!diskIO">
       <ZCard title="磁盘IO">
         <SysInfoDiskIO :data="diskIO"/>
       </ZCard>
     </el-col>
     <el-col :md="12" :xs="24">
-      <ZCard>
-        123
+      <ZCard title="流量">
+        <SysInfoFlow :data="flowData"/>
       </ZCard>
     </el-col>
   </el-row>
@@ -43,6 +50,10 @@ import SysInfoDisk from "@/views/home/components/SysInfo/SysInfoDisk.vue";
 import SysInfoDiskIO from "@/views/home/components/SysInfo/SysInfoDiskIO.vue";
 import ZCard from "@/components/ZCard.vue";
 import {ISysInfoDiskInfo} from "@/interface/ISysInfoDisk.ts";
+import SysInfoFlow from "@/views/home/components/SysInfo/SysInfoFlow.vue";
+import {ISysInfoIOStatistics} from "@/interface/ISysInfoIOStatistics.ts";
+import {ISysInfoTemperatures} from "@/interface/ISysInfoTemperatures.ts";
+import SysInfoTemperatures from "@/views/home/components/SysInfo/SysInfoTemperatures.vue";
 
 // cpu
 const cpuInfo = ref<ICpu>()
@@ -81,6 +92,8 @@ function getSysInfo() {
   })
 
   getDiskIO()
+  getIOStatistics()
+  getTemp()
 }
 
 // 磁盘
@@ -110,6 +123,28 @@ function getDiskIO() {
     const data = res.data;
     diskIO.value = data;
     logger.debug('磁盘IO信息', data)
+  })
+}
+
+// 流量
+const flowData = ref<ISysInfoIOStatistics>()
+
+function getIOStatistics() {
+  MonitorApi.networkTrafficStatistics().then(res => {
+    const data = res.data;
+    logger.debug('流量统计信息', data)
+    flowData.value = data;
+  })
+}
+
+// 传感器数据
+const hardwareTemperature = ref<ISysInfoTemperatures[]>([])
+
+function getTemp() {
+  MonitorApi.getTemp().then(res => {
+    const data = res.data
+    logger.debug('传感器数据', data);
+    hardwareTemperature.value = data;
   })
 }
 
