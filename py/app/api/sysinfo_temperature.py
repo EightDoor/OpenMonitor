@@ -14,8 +14,6 @@ def secs2hours(secs):
 def get_temp():
     """获取传感器数据"""
     result = {
-        "temperatures": {},
-        "fans": {},
         "battery": {}
     }
     temps = psutil.sensors_temperatures()
