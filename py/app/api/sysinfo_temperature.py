@@ -13,9 +13,7 @@ def secs2hours(secs):
 
 def get_temp():
     """获取传感器数据"""
-    result = {
-        "battery": {}
-    }
+    result = {}
     temps = psutil.sensors_temperatures()
     fans = psutil.sensors_fans() if hasattr(psutil, "sensors_fans") else {}
     battery = psutil.sensors_battery()
