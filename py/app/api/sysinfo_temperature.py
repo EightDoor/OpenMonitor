@@ -57,4 +57,10 @@ def get_temp():
             battery_result['status'] = "离线"
             battery_result['pluggedIn'] = "no"
         result.append(battery_result)
-    return result
+        
+    names = ['nvme', 'amdgpu', 'acpitz', 'coretemp']
+    result_front_list = []
+    for value in result:
+        if value in names:
+            result_front_list.append(value)
+    return result_front_list
