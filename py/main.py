@@ -1,9 +1,11 @@
 from fastapi import FastAPI
-from app import router
+from app import router, logger
 import uvicorn
 
 app = FastAPI()
 
+
+logger.init()
 app.include_router(router.router)
 
 if __name__ == "__main__":
