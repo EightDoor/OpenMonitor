@@ -43,16 +43,17 @@ def get_temp():
                     }
                 })
     
-    battery = {
+    battery_result = {
         "charge": 0,
         "pluggedIn": "",
         "status": ""
     }
-    battery['charge'] = round(battery.percent, 2)
+    battery_result['charge'] = round(battery.percent, 2)
     if battery.power_plugged:
-        battery['pluggedIn'] = "yes"
-        battery['status'] = "充电中" if battery.percent < 100 else "已充满"
+        battery_result['pluggedIn'] = "yes"
+        battery_result['status'] = "充电中" if battery.percent < 100 else "已充满"
     else:
-        battery['status'] = "离线"
-        battery['pluggedIn'] = "no"
+        battery_result['status'] = "离线"
+        battery_result['pluggedIn'] = "no"
+    result.append(battery_result)
     return result
