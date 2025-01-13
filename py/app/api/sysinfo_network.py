@@ -4,6 +4,7 @@
 
 import pingparsing
 import psutil
+import asyncio
 
 
 # ping 命令来测量网络的 丢包率 (packet_loss_rate) 和 平均延迟 (latency)
@@ -35,4 +36,25 @@ def get_network_info():
             "bytes_recv": net_io.bytes_recv,
         },
         "connections": len(psutil.net_connections()),
+    }
+
+# 网络流量统计
+async def network_traffic_statistics():
+    pre_io = psutil.net_io_counters()
+    await asyncio.sleep(1)
+    current_io = psutil.net_io_counters()
+    
+    bytes_sent = current_io.bytes_sent - pre_io.bytes_sent
+    bytes_recv = current_io.bytes_recv - pre_io.bytes_recv
+    return {
+        "bytes_sent": bytes_sent,
+        "bytes_recv": bytes_recv,
+        "total_bytes_sent": current_io.bytes_sent,
+        "total_bytes_recv": current_io.bytes_recv,
+        # "packet_sent": result.packet_sent,
+        # "packet_recv": result.packet_recv,
+        # "errin": result.errin,
+        # "errout": result.errout,
+        # "dropin": result.dropin,
+        # "dropout": result.dropout,
     }

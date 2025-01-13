@@ -9,6 +9,7 @@ from app.api import (
     sysinfo_log,
     sysinfo_memory,
     sysinfo_send_email,
+    sysinfo_temperature
 )
 
 router = APIRouter()
@@ -72,9 +73,20 @@ def network_quality_with_pingparsing():
     res = sysinfo_network.get_network_quality_with_pingparsing()
     return result.success(res)
 
+@router.get("/network_traffic_statistics")
+async def network_traffic():
+    """获取网络统计信息"""
+    res = await sysinfo_network.network_traffic_statistics()
+    return result.success(res)
 
 @router.get("/list_disks")
 def list_disks():
     """磁盘列表"""
     res = sysinfo_dist.get_physical_disks()
+    return result.success(res)
+
+@router.get("/get_temp")
+def get_temp():
+    """获取设备温度"""
+    res = sysinfo_temperature.get_temp()
     return result.success(res)
