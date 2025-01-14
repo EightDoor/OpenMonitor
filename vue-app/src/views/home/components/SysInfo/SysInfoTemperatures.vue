@@ -1,6 +1,7 @@
 <template>
   <el-row :gutter="20" v-if="data">
-    <el-col :span="12" v-for="(item, index) in data" :key="index">
+    <el-col :span="12" v-for="(item, index) in data" :key="index"
+            class="temperatures">
       <div>
         {{ item.name }}
       </div>
@@ -20,4 +21,12 @@ const props = defineProps<{
   data: ISysInfoTemperatures[]
 }>()
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.temperatures {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+</style>

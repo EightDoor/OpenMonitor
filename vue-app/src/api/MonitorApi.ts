@@ -1,5 +1,5 @@
 import request from "@/utils/request.ts";
-import {ICpu, IMemory} from "@/interface/ISysInfo.ts";
+import {ICpu, IDiskHealth, IMemory} from "@/interface/ISysInfo.ts";
 import {ISysInfoDiskInfo} from "@/interface/ISysInfoDisk.ts";
 import {ISysInfoIOStatistics} from "@/interface/ISysInfoIOStatistics.ts";
 import {ISysInfoTemperatures} from "@/interface/ISysInfoTemperatures.ts";
@@ -69,6 +69,18 @@ const MonitorApi = {
         return request<ISysInfoTemperatures[]>({
             url: "/get_temp",
             method: "GET"
+        })
+    },
+    /**
+     * 磁盘健康检查
+     */
+    getDiskHealth(disk: string) {
+        return request<IDiskHealth>({
+            url: "/get_disk_smart_status",
+            method: "GET",
+            params: {
+                disk
+            }
         })
     }
 }

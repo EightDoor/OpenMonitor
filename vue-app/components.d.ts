@@ -15,6 +15,7 @@ declare module 'vue' {
     ElRow: typeof import('element-plus/es')['ElRow']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
+    ElTag: typeof import('element-plus/es')['ElTag']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ZCard: typeof import('./src/components/ZCard.vue')['default']

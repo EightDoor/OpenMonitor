@@ -28,7 +28,8 @@
       "@/*": [
         "src/*"
       ]
-    }
+    },
+    "esModuleInterop": true
   },
   "include": [
     "src/**/*.ts",

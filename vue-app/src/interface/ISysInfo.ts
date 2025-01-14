@@ -67,3 +67,8 @@ export interface ICpu {
 export interface ITemperature {
     error: string;
 }
+
+export interface IDiskHealth {
+    disk: string;
+    smart_status: "FAILED" | "PASSED"
+}
