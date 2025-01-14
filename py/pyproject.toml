@@ -10,6 +10,7 @@ dependencies = [
     "pingparsing>=1.4.2",
     "psutil>=6.1.1",
     "pymongo>=4.10.1",
+    "python-dotenv>=1.0.1",
     "uvicorn>=0.34.0",
 ]
 
