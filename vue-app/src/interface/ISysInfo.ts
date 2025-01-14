@@ -4,20 +4,24 @@ export interface ISysInfo {
     disk: IDisk;
     network: INetwork;
 }
+
 export interface INetwork {
     throughput: IThroughput;
     connections: number;
 }
+
 export interface IThroughput {
     bytes_sent: number;
     bytes_recv: number;
 }
+
 export interface IDisk {
     usage: number;
     read_bytes: number;
     write_bytes: number;
     temperature: ITemperature2;
 }
+
 export interface ITemperature2 {
 }
 
@@ -25,6 +29,7 @@ export interface ISysInfoMemory {
     memory: IMemory;
     swap: ISwap;
 }
+
 export interface ISwap {
     usage: number;
     total: number;
@@ -33,12 +38,14 @@ export interface ISwap {
     sin: number;
     sout: number;
 }
+
 export interface IMemory {
     total: number;
     available: number;
     usage: number;
     other: IMemoryOther;
 }
+
 export interface IMemoryOther {
     used: number;
     free: number;
@@ -56,6 +63,12 @@ export interface ICpu {
     load: number[];
     temperature: ITemperature;
 }
+
 export interface ITemperature {
     error: string;
+}
+
+export interface IDiskHealth {
+    disk: string;
+    smart_status: "FAILED" | "PASSED"
 }

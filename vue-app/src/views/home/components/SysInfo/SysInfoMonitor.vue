@@ -18,6 +18,20 @@
       </el-col>
     </el-row>
   </ZCard>
+  <el-row :gutter="20" class="tw-mt-4" v-if="hardwareTemperature?.length > 0">
+    <el-col :md="24" :xs="24">
+      <ZCard title="传感器数据">
+        <SysInfoTemperatures :data="hardwareTemperature"/>
+      </ZCard>
+    </el-col>
+  </el-row>
+  <el-row :gutter="20" class="tw-mt-4" v-if="diskHealth?.length > 0">
+    <el-col :md="24" :xs="24">
+      <ZCard title="磁盘状态 SMART">
+        <SysInfoDiskHealth :data="diskHealth"/>
+      </ZCard>
+    </el-col>
+  </el-row>
   <el-row :gutter="20" class="tw-mt-4">
     <el-col :md="12" :xs="24" v-loading="!diskIO">
       <ZCard title="磁盘IO">
@@ -25,8 +39,8 @@
       </ZCard>
     </el-col>
     <el-col :md="12" :xs="24">
-      <ZCard>
-        123
+      <ZCard title="流量">
+        <SysInfoFlow :data="flowData"/>
       </ZCard>
     </el-col>
   </el-row>
@@ -37,12 +51,18 @@ import {onMounted, onUnmounted, ref} from "vue";
 import SysInfoCPU from "@/views/home/components/SysInfo/SysInfoCPU.vue";
 import MonitorApi from "@/api/MonitorApi";
 import logger from "@/utils/logger";
-import {ICpu, ISysInfoMemory} from "@/interface/ISysInfo.ts";
+import {ICpu, IDiskHealth, ISysInfoMemory} from "@/interface/ISysInfo.ts";
 import SysInfoMemoryUsageRate from "@/views/home/components/SysInfo/SysInfoMemoryUsageRate.vue";
 import SysInfoDisk from "@/views/home/components/SysInfo/SysInfoDisk.vue";
 import SysInfoDiskIO from "@/views/home/components/SysInfo/SysInfoDiskIO.vue";
 import ZCard from "@/components/ZCard.vue";
 import {ISysInfoDiskInfo} from "@/interface/ISysInfoDisk.ts";
+import SysInfoFlow from "@/views/home/components/SysInfo/SysInfoFlow.vue";
+import {ISysInfoIOStatistics} from "@/interface/ISysInfoIOStatistics.ts";
+import {ISysInfoTemperatures} from "@/interface/ISysInfoTemperatures.ts";
+import SysInfoTemperatures from "@/views/home/components/SysInfo/SysInfoTemperatures.vue";
+import SysInfoDiskHealth from "@/views/home/components/SysInfo/SysInfoDiskHealth.vue";
+import {ElMessage} from "element-plus";
 
 // cpu
 const cpuInfo = ref<ICpu>()
@@ -81,6 +101,8 @@ function getSysInfo() {
   })
 
   getDiskIO()
+  getIOStatistics()
+  getTemp()
 }
 
 // 磁盘
@@ -91,14 +113,17 @@ const intervalTimeDisk = 60000
 const interValueDisk = ref()
 
 function getSysDisk() {
-  diskInfoList.value = []
-  MonitorApi.sysDiskList().then(res => {
+  diskList.value = []
+  return MonitorApi.sysDiskList().then(res => {
     const data = res.data
     diskList.value = data
-    data.forEach((item) => {
-      getSysDiskInfo(item)
-    })
     logger.debug('磁盘列表', data)
+  })
+}
+
+function getSysDiskInfoInterval() {
+  diskList.value.forEach((item) => {
+    getSysDiskInfo(item)
   })
 }
 
@@ -113,12 +138,54 @@ function getDiskIO() {
   })
 }
 
+// 流量
+const flowData = ref<ISysInfoIOStatistics>()
+
+function getIOStatistics() {
+  MonitorApi.networkTrafficStatistics().then(res => {
+    const data = res.data;
+    logger.debug('流量统计信息', data)
+    flowData.value = data;
+  })
+}
+
+// 传感器数据
+const hardwareTemperature = ref<ISysInfoTemperatures[]>([])
+
+function getTemp() {
+  MonitorApi.getTemp().then(res => {
+    const data = res.data
+    logger.debug('传感器数据', data);
+    hardwareTemperature.value = data;
+  })
+}
+
 function startInterval() {
   getSysInfo()
+  getSysDiskInfoInterval()
   intervalValue.value = setInterval(getSysInfo, intervalTime)
+  interValueDisk.value = setInterval(getSysDiskInfoInterval, intervalTimeDisk)
+}
 
-  getSysDisk()
-  interValueDisk.value = setInterval(getSysDisk, intervalTimeDisk)
+// 磁盘健康
+const diskHealth = ref<IDiskHealth[]>([])
+
+function getDiskHealth() {
+  diskHealth.value = []
+  diskList.value.forEach((item, index) => {
+    const disk = item[0]
+    MonitorApi.getDiskHealth(disk).then(res => {
+      const data = res.data;
+      logger.debug(`磁盘健康检查 -> ${index}`, data)
+      if (data?.error) {
+        ElMessage.error(data.error)
+      } else {
+        if (data?.disk) {
+          diskHealth.value.push(data)
+        }
+      }
+    })
+  })
 }
 
 onUnmounted(() => {
@@ -130,7 +197,10 @@ onUnmounted(() => {
   }
 })
 
-onMounted(() => {
+onMounted(async () => {
+  await getSysDisk()
+  getDiskHealth()
+
   startInterval()
 })
 </script>

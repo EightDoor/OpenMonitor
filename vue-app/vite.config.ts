@@ -22,13 +22,13 @@ export default defineConfig({
         }),
     ],
     server: {
-      proxy: {
-          '/api': {
-              target: 'http://192.168.192.5:8200',
-              changeOrigin: true,
-              rewrite: (path) => path.replace(/^\/api/, ''),
-          },
-      }
+        proxy: {
+            '/api': {
+                target: 'http://192.168.192.3:8500',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, ''),
+            },
+        }
     },
     resolve: {
         // extensions: [".js", ".jsx", ".ejs", '.mjs'], // 之前忽略了 .mjs
