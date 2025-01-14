@@ -25,7 +25,7 @@
       </ZCard>
     </el-col>
   </el-row>
-  <el-row :gutter="20" class="tw-mt-4">
+  <el-row :gutter="20" class="tw-mt-4" v-if="diskHealth?.length > 0">
     <el-col :md="24" :xs="24">
       <ZCard title="磁盘状态 SMART">
         <SysInfoDiskHealth :data="diskHealth"/>
@@ -176,11 +176,13 @@ function getDiskHealth() {
     const disk = item[0]
     MonitorApi.getDiskHealth(disk).then(res => {
       const data = res.data;
+      logger.debug(`磁盘健康检查 -> ${index}`, data)
       if (data?.error) {
         ElMessage.error(data.error)
       } else {
-        diskHealth.value.push(data)
-        logger.debug(`磁盘健康检查 -> ${index}`, data)
+        if (data?.disk) {
+          diskHealth.value.push(data)
+        }
       }
     })
   })
