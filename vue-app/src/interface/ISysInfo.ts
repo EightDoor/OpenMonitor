@@ -64,6 +64,12 @@ export interface ICpu {
     temperature: ITemperature;
 }
 
+export interface IAverageLoad {
+    avg1: number;
+    avg5: number;
+    avg15: number
+}
+
 export interface ITemperature {
     error: string;
 }
