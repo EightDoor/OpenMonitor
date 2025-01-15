@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-flex-row tw-justify-center tw-items-center">
+  <div class="tw-flex tw-flex-row tw-justify-center tw-items-center tw-flex-wrap">
     <div v-for="(item, index) of list" class="tw-mr-20" :key="index">
       <PageLayout>
         <template #title>

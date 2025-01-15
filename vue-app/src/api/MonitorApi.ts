@@ -1,5 +1,5 @@
 import request from "@/utils/request.ts";
-import {ICpu, IDiskHealth, IMemory} from "@/interface/ISysInfo.ts";
+import {IAverageLoad, ICpu, IDiskHealth, IMemory} from "@/interface/ISysInfo.ts";
 import {ISysInfoDiskInfo} from "@/interface/ISysInfoDisk.ts";
 import {ISysInfoIOStatistics} from "@/interface/ISysInfoIOStatistics.ts";
 import {ISysInfoTemperatures} from "@/interface/ISysInfoTemperatures.ts";
@@ -11,6 +11,15 @@ const MonitorApi = {
     sysCpuInfo() {
         return request<ICpu>({
             url: "/get_cpu_info",
+            method: "GET"
+        })
+    },
+    /**
+     * cpu平均负载
+     */
+    sysAverageLoad() {
+        return request<IAverageLoad>({
+            url: "/average_load",
             method: "GET"
         })
     },

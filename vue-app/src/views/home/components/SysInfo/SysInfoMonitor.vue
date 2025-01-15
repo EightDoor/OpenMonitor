@@ -3,6 +3,11 @@
     <el-row>
       <el-col :md="4" :xs="12">
         <div class="status-item">
+          <SysInfoAverageLoad :data="averageLoad"/>
+        </div>
+      </el-col>
+      <el-col :md="4" :xs="12">
+        <div class="status-item">
           <SysInfoCPU :cpuInfo="cpuInfo"/>
         </div>
       </el-col>
@@ -11,7 +16,7 @@
           <SysInfoMemoryUsageRate :data="memoryUsageRate"/>
         </div>
       </el-col>
-      <el-col :md="16" :xs="24">
+      <el-col :md="12" :xs="24">
         <div class="status-item-disk">
           <SysInfoDisk :list="diskInfoList"/>
         </div>
@@ -51,7 +56,7 @@ import {onMounted, onUnmounted, ref} from "vue";
 import SysInfoCPU from "@/views/home/components/SysInfo/SysInfoCPU.vue";
 import MonitorApi from "@/api/MonitorApi";
 import logger from "@/utils/logger";
-import {ICpu, IDiskHealth, ISysInfoMemory} from "@/interface/ISysInfo.ts";
+import {IAverageLoad, ICpu, IDiskHealth, ISysInfoMemory} from "@/interface/ISysInfo.ts";
 import SysInfoMemoryUsageRate from "@/views/home/components/SysInfo/SysInfoMemoryUsageRate.vue";
 import SysInfoDisk from "@/views/home/components/SysInfo/SysInfoDisk.vue";
 import SysInfoDiskIO from "@/views/home/components/SysInfo/SysInfoDiskIO.vue";
@@ -63,6 +68,7 @@ import {ISysInfoTemperatures} from "@/interface/ISysInfoTemperatures.ts";
 import SysInfoTemperatures from "@/views/home/components/SysInfo/SysInfoTemperatures.vue";
 import SysInfoDiskHealth from "@/views/home/components/SysInfo/SysInfoDiskHealth.vue";
 import {ElMessage} from "element-plus";
+import SysInfoAverageLoad from "@/views/home/components/SysInfo/SysInfoAverageLoad.vue";
 
 // cpu
 const cpuInfo = ref<ICpu>()
@@ -74,6 +80,7 @@ const intervalTime = 3000;
 
 function getSysDiskInfo(item) {
   const [device, path, fs_type, options] = item;
+  diskInfoList.value = []
   MonitorApi.sysDiskInfo(path).then(res => {
     const data = res.data;
     diskInfoList.value.push({
@@ -84,6 +91,16 @@ function getSysDiskInfo(item) {
       options
     });
     logger.debug(`磁盘信息: ${path}`, data)
+  })
+}
+
+const averageLoad = ref<IAverageLoad>()
+
+function sysAverageLoad() {
+  MonitorApi.sysAverageLoad().then(res => {
+    const data = res.data;
+    averageLoad.value = data;
+    logger.debug('cpu平均负载 1分钟、5分钟、15分钟', data);
   })
 }
 
@@ -99,6 +116,7 @@ function getSysInfo() {
     memoryUsageRate.value = data
     logger.debug('内存信息', data)
   })
+  sysAverageLoad()
 
   getDiskIO()
   getIOStatistics()
@@ -220,5 +238,6 @@ onMounted(async () => {
   align-items: center;
   margin-left: 40px;
   flex-wrap: wrap;
+  flex: 1;
 }
 </style>

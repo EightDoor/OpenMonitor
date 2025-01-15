@@ -12,13 +12,15 @@
 </template>
 <script lang="ts" setup>
 
-import SysInfoMonitor from "./components/SysInfo/SysInfoMonitor.vue";
 import HomeLayout from "@/views/home/components/HomeLayout.vue";
 import {ref} from "vue";
-import Settings from "@/views/home/components/Settings.vue";
+import Settings from "@/views/home/components/Settings/Settings.vue";
 import {TabsPaneContext} from "element-plus";
+import SysInfoMonitor from "@/views/home/components/SysInfo/SysInfoMonitor.vue";
 
 const activeName = ref("sysinfo")
+
+// const activeName = ref("setting")
 
 function handleClick(tab: TabsPaneContext, event: Event) {
   console.log(tab, event)
