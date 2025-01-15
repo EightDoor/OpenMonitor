@@ -16,7 +16,11 @@
           <SysInfoMemoryUsageRate :data="memoryUsageRate"/>
         </div>
       </el-col>
-      <el-col :md="12" :xs="24">
+    </el-row>
+  </ZCard>
+  <ZCard class="tw-mt-4" title="磁盘信息">
+    <el-row>
+      <el-col :md="24" :xs="24">
         <div class="status-item-disk">
           <SysInfoDisk :list="diskInfoList"/>
         </div>

@@ -23,7 +23,7 @@
       </el-radio-group>
     </el-form-item>
   </el-form>
-  <ul>
+  <ul class="ul">
     <li>推荐使用465端口，协议为SSL/TLS</li>
     <li>25端口为SMTP协议，587端口为STARTTLS协议</li>
   </ul>
@@ -88,4 +88,12 @@ const rules = reactive<FormRules<AlarmConfig>>({
   ]
 })
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.ul {
+  & > li {
+    font-size: 13px;
+    color: #6e6e6e;
+    margin-top: 5px;
+  }
+}
+</style>
