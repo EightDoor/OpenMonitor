@@ -15,3 +15,12 @@ def get_cpu_info():
         "usage": cpu_usage,
         "count": cpu_count,
     }
+
+def average_load():
+    """平均负载 1分钟、5分钟、15分钟"""
+    avg1,avg5, avg15 = [x / psutil.cpu_count() * 100 for x in psutil.getloadavg()]
+    return {
+        "avg1": avg1,
+        "avg5": avg5,
+        "avg15": avg15
+    }

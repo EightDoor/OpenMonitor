@@ -26,6 +26,11 @@ def get_cpu_info():
     res = sysinfo_cpu.get_cpu_info()
     return result.success(res)
 
+@router.get("/average_load")
+def average_load():
+    """获取cpu平均负载"""
+    res = sysinfo_cpu.average_load()
+    return result.success(res)
 
 @router.get("/get_disk_info")
 def get_disk_info(path: str):
