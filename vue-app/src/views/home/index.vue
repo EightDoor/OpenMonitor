@@ -1,9 +1,9 @@
 <template>
   <HomeLayout>
     <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-      <el-tab-pane label="基础" name="sysinfo">
-        <SysInfoMonitor/>
-      </el-tab-pane>
+      <!--      <el-tab-pane label="基础" name="sysinfo">-->
+      <!--        <SysInfoMonitor/>-->
+      <!--      </el-tab-pane>-->
       <el-tab-pane label="设置" name="setting">
         <Settings/>
       </el-tab-pane>
@@ -12,13 +12,13 @@
 </template>
 <script lang="ts" setup>
 
-import SysInfoMonitor from "./components/SysInfo/SysInfoMonitor.vue";
 import HomeLayout from "@/views/home/components/HomeLayout.vue";
 import {ref} from "vue";
-import Settings from "@/views/home/components/Settings.vue";
+import Settings from "@/views/home/components/Settings/Settings.vue";
 import {TabsPaneContext} from "element-plus";
 
-const activeName = ref("sysinfo")
+// const activeName = ref("sysinfo")
+const activeName = ref("setting")
 
 function handleClick(tab: TabsPaneContext, event: Event) {
   console.log(tab, event)

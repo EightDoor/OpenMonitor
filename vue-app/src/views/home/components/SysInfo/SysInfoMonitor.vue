@@ -238,5 +238,6 @@ onMounted(async () => {
   align-items: center;
   margin-left: 40px;
   flex-wrap: wrap;
+  flex: 1;
 }
 </style>
