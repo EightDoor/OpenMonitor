@@ -1,9 +1,11 @@
 <template>
   <el-row :gutter="20">
     <el-col :md="12" :xs="24" v-for="(item, index) of data" :key="index"
-            class="tw-flex tw-flex-row tw-justify-between tw-items-center">
-      <div>{{ item.disk }}</div>
-      <el-tag :type="formatType(item.smart_status)">{{ formatName(item.smart_status) }}</el-tag>
+    >
+      <div class="tw-flex tw-flex-row tw-justify-between tw-items-center tw-mb-4">
+        <div>{{ item.disk }}</div>
+        <el-tag :type="formatType(item.smart_status)">{{ formatName(item.smart_status) }}</el-tag>
+      </div>
     </el-col>
   </el-row>
 </template>
