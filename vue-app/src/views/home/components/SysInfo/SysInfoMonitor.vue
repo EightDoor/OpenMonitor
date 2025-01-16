@@ -74,6 +74,11 @@ import SysInfoDiskHealth from "@/views/home/components/SysInfo/SysInfoDiskHealth
 import {ElMessage} from "element-plus";
 import SysInfoAverageLoad from "@/views/home/components/SysInfo/SysInfoAverageLoad.vue";
 
+
+defineExpose({
+  refreshData
+})
+
 // cpu
 const cpuInfo = ref<ICpu>()
 // 内存
@@ -183,8 +188,6 @@ function getTemp() {
 }
 
 function startInterval() {
-  getSysInfo()
-  getSysDiskInfoInterval()
   intervalValue.value = setInterval(getSysInfo, intervalTime)
   interValueDisk.value = setInterval(getSysDiskInfoInterval, intervalTimeDisk)
 }
@@ -210,6 +213,16 @@ function getDiskHealth() {
   })
 }
 
+/**
+ * 刷新数据
+ */
+async function refreshData() {
+  await getSysDisk()
+  getDiskHealth()
+  getSysInfo()
+  getSysDiskInfoInterval()
+}
+
 onUnmounted(() => {
   if (intervalValue.value) {
     clearInterval(intervalValue.value)
@@ -220,11 +233,11 @@ onUnmounted(() => {
 })
 
 onMounted(async () => {
-  await getSysDisk()
-  getDiskHealth()
+  await refreshData()
 
   startInterval()
 })
+
 </script>
 
 <style scoped lang="scss">

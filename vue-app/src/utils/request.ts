@@ -1,8 +1,27 @@
 import axios from 'axios';
 import Config from "@/config";
+import {useHome} from "@/store/models/useHome.ts";
+import store from '@/store/index.ts';
+import logger from "@/utils/logger.ts";
+
+const homeStore = useHome(store)
 
 const request = axios.create({
     baseURL: Config.baseUrl,
+})
+
+request.interceptors.request.use(function (request) {
+    let selectIp = homeStore.getSelectIP;
+    if (!selectIp) {
+        const configIP = Config.serverIps[0].value
+        homeStore.setSelectIP(configIP)
+        selectIp = configIP
+    }
+    logger.debug('request请求ip', selectIp)
+    request.baseURL = selectIp;
+    return request
+}, function (error) {
+    return Promise.reject(error)
 })
 
 // 添加响应拦截器

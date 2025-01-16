@@ -3,11 +3,9 @@
     <slot/>
   </div>
 </template>
-<script setup>
-  import { ref } from 'vue';
-</script>
+<script setup></script>
 <style scoped lang="scss">
 .layout {
-  padding: 50px;
+  padding: 20px 50px;
 }
 </style>
