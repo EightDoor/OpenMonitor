@@ -8,7 +8,7 @@ fi
 
 # 获取当前脚本所在目录的绝对路径
 SCRIPT_DIR=$(pwd)
-SCRIPT_NAME="main.py"
+SCRIPT_NAME="main"
 SERVICE_NAME="monitor-py"
 
 # 设置 Python 脚本的路径
@@ -16,7 +16,7 @@ SCRIPT_PATH="$SCRIPT_DIR/$SCRIPT_NAME"
 
 # 检查 Python 脚本是否存在
 if [ ! -f "$SCRIPT_PATH" ]; then
-  echo "Python 脚本 $SCRIPT_NAME 不存在，请确保脚本在当前目录。"
+  echo "可执行 脚本 $SCRIPT_NAME 不存在，请确保脚本在当前目录。"
   exit 1
 fi
 
@@ -44,8 +44,7 @@ Description=Your Python Program
 After=network.target
 
 [Service]
-#ExecStart=/usr/bin/python3 $SCRIPT_PATH
-ExecStart=/root/miniconda3/bin/python $SCRIPT_PATH
+ExecStart=$SCRIPT_PATH
 WorkingDirectory=$SCRIPT_DIR
 Restart=always
 User=$(whoami)
