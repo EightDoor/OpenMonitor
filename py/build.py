@@ -4,6 +4,8 @@ params = [
     '-F',
     '--clean',
     '--noconfirm',
+    # '--debug=all',
+    '--noupx',
     'main.py'
 ]
 
