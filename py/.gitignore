@@ -4,8 +4,8 @@ __pycache__/
 *$py.class
 
 # 环境变量文件
-.env
-.env.*
+#.env
+#.env.*
 
 # 虚拟环境
 venv/
