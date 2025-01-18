@@ -1,7 +1,7 @@
 # OpenMonitor 开源监控工具
 使用python vue编写的linux服务器监控工具
 ## 安装指南
-### 源代码安装
+### 源代码本地运行
 1. 克隆项目到本地：
 ```shell
 git clone https://github.com/EightDoor/OpenMonitor.git
