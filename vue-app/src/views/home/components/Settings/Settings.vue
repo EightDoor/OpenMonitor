@@ -1,10 +1,10 @@
 <template>
   <div class="settings">
-    <DiskAlarm/>
+    <Host/>
   </div>
 </template>
 <script setup>
-import DiskAlarm from "@/views/home/components/Settings/Alarm.vue";
+import Host from "@/views/home/components/Settings/Host.vue";
 </script>
 <style scoped lang="scss">
 .settings {

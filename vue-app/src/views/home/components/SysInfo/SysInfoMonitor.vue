@@ -92,13 +92,15 @@ function getSysDiskInfo(item) {
   diskInfoList.value = []
   MonitorApi.sysDiskInfo(path).then(res => {
     const data = res.data;
-    diskInfoList.value.push({
+    const list = diskInfoList.value
+    list.push({
       ...data,
       device,
       path,
       fs_type,
       options
     });
+    diskInfoList.value = list.sort((a, b) => a.path!.length - b.path!.length)
     logger.debug(`磁盘信息: ${path}`, data)
   })
 }

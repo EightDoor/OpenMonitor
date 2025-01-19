@@ -6,9 +6,9 @@
       </el-radio>
     </el-radio-group>
     <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-      <el-tab-pane label="基础" name="sysinfo">
-        <SysInfoMonitor ref="sysInfoMonitorRef"/>
-      </el-tab-pane>
+      <!--      <el-tab-pane label="基础" name="sysinfo">-->
+      <!--        <SysInfoMonitor ref="sysInfoMonitorRef"/>-->
+      <!--      </el-tab-pane>-->
       <el-tab-pane label="设置" name="setting">
         <Settings/>
       </el-tab-pane>
@@ -19,17 +19,16 @@
 
 import HomeLayout from "@/views/home/components/HomeLayout.vue";
 import {onMounted, ref, watch} from "vue";
-import Settings from "@/views/home/components/Settings/Settings.vue";
 import {ElMessage, TabsPaneContext} from "element-plus";
-import SysInfoMonitor from "@/views/home/components/SysInfo/SysInfoMonitor.vue";
 import logger from "@/utils/logger.ts";
 import Config from "@/config";
 import {useHome} from "@/store/models/useHome.ts";
+import Settings from "@/views/home/components/Settings/Settings.vue";
 
-const activeName = ref("sysinfo")
+// const activeName = ref("sysinfo")
 const homeStore = useHome()
 
-// const activeName = ref("setting")
+const activeName = ref("setting")
 
 function handleClick(tab: TabsPaneContext, event: Event) {
   console.log(tab, event)
