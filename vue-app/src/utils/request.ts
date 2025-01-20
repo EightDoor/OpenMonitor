@@ -12,8 +12,8 @@ const request = axios.create({
 
 request.interceptors.request.use(function (request) {
     let selectIp = homeStore.getSelectIP;
-    if (!selectIp) {
-        const configIP = Config.serverIps[0].value
+    if (!selectIp && homeStore.getServerIps?.length > 0) {
+        const configIP = homeStore.getServerIps[0].value
         homeStore.setSelectIP(configIP)
         selectIp = configIP
     }
