@@ -6,6 +6,8 @@ params = [
     '--noconfirm',
     # '--debug=all',
     '--noupx',
+    '--name',
+    'OpenMonitor',
     'main.py'
 ]
 
